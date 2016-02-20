@@ -72,7 +72,7 @@ public class ReviewEndpoint {
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response addReview(@HeaderParam("authorization") String authorization, Review review) {
+    public Response addReview(@HeaderParam("Authorization") String authorization, Review review) {
         EntityManager em = EMF.createEntityManager();
         manager.checkUser(em, authorization);
 

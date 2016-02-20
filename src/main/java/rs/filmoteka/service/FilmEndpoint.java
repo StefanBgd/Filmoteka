@@ -61,11 +61,16 @@ public class FilmEndpoint {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response addFilm(@HeaderParam("authorization") String authorization, Film film) {
+        try {
+            
         EntityManager em = EMF.createEntityManager();
         manager.checkUser(em, authorization);
         manager.persist(em, film);
         em.close();
         return Response.ok(film).build();
+        } catch (Exception e) {
+            return Response.ok().build();
+        }
     }
     
     @PUT
