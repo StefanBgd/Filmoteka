@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Meni</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="bibl/jquery-1.12.0.js"></script>
+        <link rel="stylesheet" href="bibl/bs/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bibl/bs/css/bootstrap-theme.min.css">
+        <script src="bibl/bs/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            //proverava da li je korisnik ulogovan, ako nije salje gana login stranu (ovo treba da postoji na svakoj strani sem pocetnoj)
+            $(document).ready(function () {
+                var token = document.cookie.substring(6);
+                if (token.length < 1) {
+                    window.location.href = "http://localhost:8084/Filmoteka/index.html";
+                }
+
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        "Authorization": token
+                    },
+                    url: "http://localhost:8084/Filmoteka/rest/users",
+                    success: function (data) {
+                    }, error: function () {
+                        window.location.href = "http://localhost:8084/Filmoteka/index.html";
+                    }
+                });
+
+            });
+
+        </script>
+
+        <style type="text/css">
+            #logout {
+                float:right;
+                margin: 10px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div class="imagesc">
+            <button id="logout" type="button" class="btn btn-info">Logout</button>
+        </div>
+
+
+        <script type="text/javascript">
+            
+            //cisti kuki i redirektuje na pocetnu
+            $('#logout').click(function () {
+                document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                window.location.href = "http://localhost:8084/Filmoteka/index.html";
+            });
+
+        </script>
+
+    </body>
+</html>
