@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findByUserID", query = "SELECT u FROM User u WHERE u.userID = :userID"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPass", query = "SELECT u FROM User u WHERE u.pass = :pass"),
-    @NamedQuery(name = "User.findByToken", query = "SELECT u FROM User u WHERE u.token = :token")})
+    @NamedQuery(name = "User.findByToken", query = "SELECT u FROM User u WHERE u.token = :token"),
+    @NamedQuery(name = "User.findByTypeID", query = "SELECT u FROM User u WHERE u.typeID = :typeID")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,9 +55,8 @@ public class User implements Serializable {
     @Size(max = 45)
     @Column(name = "token")
     private String token;
-    @JoinColumn(name = "typeID", referencedColumnName = "id")
-    @ManyToOne
-    private UserType typeID;
+    @Column(name = "typeID")
+    private Integer typeID;
     @JoinColumn(name = "authorID", referencedColumnName = "authorID")
     @ManyToOne
     private Author authorID;
@@ -106,11 +106,11 @@ public class User implements Serializable {
         this.token = token;
     }
 
-    public UserType getTypeID() {
+    public Integer getTypeID() {
         return typeID;
     }
 
-    public void setTypeID(UserType typeID) {
+    public void setTypeID(Integer typeID) {
         this.typeID = typeID;
     }
 

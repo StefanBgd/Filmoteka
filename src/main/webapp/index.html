@@ -114,6 +114,18 @@
                                     <input id="signup-pass" type="password" class="form-control" name="passwd" placeholder="Password">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="ime" class="col-md-3 control-label">Ime i prezime</label>
+                                <div class="col-md-9">
+                                    <input id="signup-ime" type="text" class="form-control" name="ime" placeholder="Ime i prezime">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="grad" class="col-md-3 control-label">Grad</label>
+                                <div class="col-md-9">
+                                    <input id="signup-grad" type="text" class="form-control" name="grad" placeholder="Grad">
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <!-- Button -->                                        
@@ -160,11 +172,14 @@
             $('#btn-signup').click(function () {
                 var username = $("input#signup-name").val();
                 var password = $("input#signup-pass").val();
+                var ime = $("input#signup-ime").val();
+                var grad = $("input#signup-grad").val();
+                
                 $.ajax({
                     type: "GET",
                     // dataType: "json",
                     // async: false,
-                    url: "http://localhost:8084/Filmoteka/rest/users/register?username=" + username + "&password=" + password,
+                    url: "http://localhost:8084/Filmoteka/rest/users/register?username=" + username + "&password=" + password + "&imePrezime=" + ime + "&grad=" + grad,
                     success: function (data) {
                         location.reload();
                     }

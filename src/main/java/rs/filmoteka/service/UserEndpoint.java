@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import rs.filmoteka.domain.Author;
 import rs.filmoteka.domain.User;
 import rs.filmoteka.domain.UserType;
 import rs.filmoteka.emf.EMF;
@@ -42,8 +43,8 @@ public class UserEndpoint {
     @GET
     public Response checkToken(@HeaderParam("authorization") String token) {
         try {
-            Integer id = Integer.parseInt(tokenHelper.decode(token).split("##")[1]);
             EntityManager em = EMF.createEntityManager();
+            Integer id = Integer.parseInt(tokenHelper.decode(token).split("##")[1]);
             User user = em.createNamedQuery("User.findByUserID", User.class).setParameter("userID", id).getSingleResult();
             return Response.ok().build();
         } catch (Exception e) {
@@ -98,14 +99,21 @@ public class UserEndpoint {
 
     @GET
     @Path("/register")
-    public Response register(@QueryParam("username") String username, @QueryParam("password") String password, @DefaultValue("2") @QueryParam("type") Integer type) {
+    public Response register(@QueryParam("imePrezime") String imePrezime, @QueryParam("grad") String grad, @QueryParam("username") String username, @QueryParam("password") String password, @DefaultValue("2") @QueryParam("type") Integer type) {
         try {
             EntityManager em = EMF.createEntityManager();
+            
+            Author author = new Author();
+            author.setGrad(grad);
+            author.setImePrezime(imePrezime);
+
+            manager.persist(em, author);
+            
             User user = new User();
             user.setUsername(username);
             user.setPass(password);
-            UserType utype = em.find(UserType.class, type);
-            user.setTypeID(utype);
+            user.setTypeID(type);
+            user.setAuthorID(author);
             manager.persist(em, user);
             return Response.ok().build();
         } catch (Exception e) {
