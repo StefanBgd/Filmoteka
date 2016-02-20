@@ -21,9 +21,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import rs.filmoteka.domain.Author;
 import rs.filmoteka.domain.Review;
+import rs.filmoteka.domain.User;
 import rs.filmoteka.emf.EMF;
 import rs.filmoteka.emf.Manager;
+import rs.filmoteka.token.AbstractTokenCreator;
+import rs.filmoteka.token.Base64Token;
 
 /**
  *
@@ -33,7 +37,13 @@ import rs.filmoteka.emf.Manager;
 public class ReviewEndpoint {
 
     private Manager manager = new Manager();
-
+    AbstractTokenCreator tokenHelper;
+    
+    
+        public ReviewEndpoint() {
+        tokenHelper = new Base64Token();
+    }
+    
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getReviews(@HeaderParam("authorization") String authorization, @DefaultValue("10") @QueryParam("limit") int limit, @DefaultValue("1") @QueryParam("page") int page) {
@@ -45,8 +55,6 @@ public class ReviewEndpoint {
         };
         return Response.ok().entity(entity).build();
     }
-
-
 
     @GET
     @Path("/{id}")
@@ -67,6 +75,12 @@ public class ReviewEndpoint {
     public Response addReview(@HeaderParam("authorization") String authorization, Review review) {
         EntityManager em = EMF.createEntityManager();
         manager.checkUser(em, authorization);
+
+        Integer id = Integer.parseInt(tokenHelper.decode(authorization).split("##")[1]);
+        User user = em.createNamedQuery("User.findByUserID", User.class).setParameter("userID", id).getSingleResult();
+
+        review.setAuthorID(user.getAuthorID());
+        
         manager.persist(em, review);
         em.close();
         return Response.ok(review).build();
