@@ -75,11 +75,11 @@ public class ReviewEndpoint {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response addReview(@HeaderParam("Authorization") String authorization, Review review) {
         EntityManager em = EMF.createEntityManager();
-        manager.checkUser(em, authorization);
+        manager.checkAuthor(em, authorization);
 
         Integer id = Integer.parseInt(tokenHelper.decode(authorization).split("##")[1]);
         User user = em.createNamedQuery("User.findByUserID", User.class).setParameter("userID", id).getSingleResult();
-//        review.setDatum((int) System.currentTimeMillis());
+        review.setDatum(new Date());
         review.setAuthorID(user.getAuthorID());
         
         manager.persist(em, review);

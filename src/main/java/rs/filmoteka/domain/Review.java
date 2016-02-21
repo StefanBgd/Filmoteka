@@ -6,6 +6,7 @@
 package rs.filmoteka.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r"),
     @NamedQuery(name = "Review.findByReviewID", query = "SELECT r FROM Review r WHERE r.reviewID = :reviewID"),
-//    @NamedQuery(name = "Review.getMarkStats", query = "SELECT r.ocena, count(*) FROM Review r GROUP BY r.ocena"),
     @NamedQuery(name = "Review.findByDatum", query = "SELECT r FROM Review r WHERE r.datum = :datum"),
     @NamedQuery(name = "Review.findByOcena", query = "SELECT r FROM Review r WHERE r.ocena = :ocena")})
 public class Review implements Serializable {
@@ -45,7 +47,8 @@ public class Review implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "datum")
-    private int datum;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datum;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -70,7 +73,7 @@ public class Review implements Serializable {
         this.reviewID = reviewID;
     }
 
-    public Review(Integer reviewID, int datum, String sadrzaj, int ocena) {
+    public Review(Integer reviewID, Date datum, String sadrzaj, int ocena) {
         this.reviewID = reviewID;
         this.datum = datum;
         this.sadrzaj = sadrzaj;
@@ -85,11 +88,11 @@ public class Review implements Serializable {
         this.reviewID = reviewID;
     }
 
-    public int getDatum() {
+    public Date getDatum() {
         return datum;
     }
 
-    public void setDatum(int datum) {
+    public void setDatum(Date datum) {
         this.datum = datum;
     }
 

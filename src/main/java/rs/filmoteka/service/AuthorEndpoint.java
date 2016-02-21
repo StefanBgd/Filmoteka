@@ -36,7 +36,7 @@ public class AuthorEndpoint {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getCities(@HeaderParam("authorization") String authorization,@DefaultValue("10") @QueryParam("limit") int limit, @DefaultValue("1")@QueryParam("page") int page) {
+    public Response getAuthors(@HeaderParam("authorization") String authorization,@DefaultValue("10") @QueryParam("limit") int limit, @DefaultValue("1")@QueryParam("page") int page) {
         EntityManager em = EMF.createEntityManager();
         manager.checkUser(em, authorization);
         List<Author> authors = em.createNamedQuery("Author.findAll", Author.class).setFirstResult((page-1) * limit).setMaxResults(limit).getResultList();

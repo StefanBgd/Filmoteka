@@ -22,7 +22,7 @@
                         // async: false,
                         url: "http://localhost:8084/Filmoteka/rest/users",
                         success: function (data) {
-                            window.location.href = "http://localhost:8084/Filmoteka/meni.html";
+                            window.location.href = "http://localhost:8084/Filmoteka/recenzije.html";
                         }, error: function () {
                         }
                     });
@@ -103,15 +103,15 @@
 
 
                             <div class="form-group">
-                                <label for="username" class="col-md-3 control-label">User Name</label>
+                                <label for="username" class="col-md-3 control-label">Korisničko ime</label>
                                 <div class="col-md-9">
-                                    <input id="signup-name" type="text" class="form-control" name="username" placeholder="User Name">
+                                    <input id="signup-name" type="text" class="form-control" name="username" placeholder="Korisničko ime">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="col-md-3 control-label">Password</label>
+                                <label for="password" class="col-md-3 control-label">Šifra</label>
                                 <div class="col-md-9">
-                                    <input id="signup-pass" type="password" class="form-control" name="passwd" placeholder="Password">
+                                    <input id="signup-pass" type="password" class="form-control" name="passwd" placeholder="Šifra">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -126,7 +126,12 @@
                                     <input id="signup-grad" type="text" class="form-control" name="grad" placeholder="Grad">
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label for="grad" class="col-md-3 control-label">Autor</label>
+                                <div class="col-md-9 checkbox">
+                                    <label><input id="autor" type="checkbox" value=""></label>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <!-- Button -->                                        
                                 <div class="col-md-offset-3 col-md-9">
@@ -164,7 +169,7 @@
                     success: function (data) {
                         // alert(data);
                         document.cookie = "token=" + data.token;
-                        window.location.href = "http://localhost:8084/Filmoteka/meni.html";
+                        window.location.href = "http://localhost:8084/Filmoteka/recenzije.html";
                     }
                 });
             });
@@ -174,12 +179,14 @@
                 var password = $("input#signup-pass").val();
                 var ime = $("input#signup-ime").val();
                 var grad = $("input#signup-grad").val();
-
+                var bautor = $('#autor').is(":checked");
+                var autor = 1
+                if (bautor) {
+                    autor = 2;
+                }
                 $.ajax({
                     type: "GET",
-                    // dataType: "json",
-                    // async: false,
-                    url: "http://localhost:8084/Filmoteka/rest/users/register?username=" + username + "&password=" + password + "&imePrezime=" + ime + "&grad=" + grad,
+                    url: "http://localhost:8084/Filmoteka/rest/users/register?username=" + username + "&password=" + password + "&imePrezime=" + ime + "&grad=" + grad + "&type=" + autor,
                     success: function (data) {
                         location.reload();
                     }

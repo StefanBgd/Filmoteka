@@ -61,4 +61,22 @@ public class Manager {
             throw new NotAuthorizedException(ex.getMessage());
         }
     }
+
+    public void checkAuthor(EntityManager em, String token) {
+        try {
+            User user = em.find(User.class, Integer.parseInt(tokenHelper.decode(token).split("##")[1]));
+            if (user.getToken() != null && !user.getToken().equals("")) {
+                if (!(user.getAuthorID() != null && user.getAuthorID().getAuthorID() == 2)) {
+                    em.close();
+                    throw new NotAuthorizedException("You have no premission for this request");
+                }
+            } else {
+                em.close();
+                throw new NotAuthorizedException("You are not logged in!");
+            }
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException | IllegalArgumentException ex) {
+            em.close();
+            throw new NotAuthorizedException(ex.getMessage());
+        }
+    }
 }

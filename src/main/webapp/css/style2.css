@@ -7,45 +7,6 @@
 /*=========================================== 
  * Importing CSS Libraries
  *===========================================*/
-#novaRecDiv {
-    width: 50%;
-    padding: 30px;
-    margin: auto;
-    margin-bottom: 30px;
-    margin-top: 50px;
-}
-
-#novaRecDiv form {
-    margin-top: 30px;
-}
-
-#novaRecDiv form input {
-    width:20%;
-    color: white;
-    background-color: #131a20;
-}
-
-#novaRecDiv form p {
-    margin:-15px;
-    margin-left: 5px;
-}
-
-#novaRecDiv form textarea {
-    width: 100%;
-    color: white;
-    background-color: #131a20;
-}
-
-.mySection>h1, .mySection>h2 {
-    text-align: center;
-    padding-top: 20px;
-}
-
-.mySection {
-    width: 50%;
-    margin: auto;
-}
-
 article,
 aside,
 details,
@@ -251,7 +212,7 @@ table {
  */
 body {
   background-color: #131a20;
-  //background-image: url(dummy/background.jpg);
+  /*background-image: url(dummy/background.jpg);*/
   background-position: top center;
   background-repeat: no-repeat;
   color: #84878d;

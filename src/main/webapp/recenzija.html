@@ -26,7 +26,7 @@
         <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
         <link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/style2.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -38,11 +38,21 @@
 
             $(document).ready(function () {
                 var token = document.cookie.substring(6);
-                var list;
-                if (token.length < 5) {
+                if (token.length < 1) {
                     window.location.href = "http://localhost:8084/Filmoteka/index.html";
                 }
 
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        "Authorization": token
+                    },
+                    url: "http://localhost:8084/Filmoteka/rest/users",
+                    success: function (data) {
+                    }, error: function () {
+                        window.location.href = "http://localhost:8084/Filmoteka/index.html";
+                    }
+                });
 
                 var qs = (function (a) {
                     if (a == "")
@@ -63,12 +73,12 @@
 
 
                 var token = document.cookie.substring(6);
-                function drawTable(data) {
+                function createReview(data) {
 //                $("#reviewsdiv div").remove();
-                    drawRow(data);
+                    drawReview(data);
                 }
 
-                function drawRow(r) {
+                function drawReview(r) {
                     var procenat = r.filmID.rating / 10 * 100;
                     var ocena = Number(procenat / 20).toFixed(2);
 
@@ -96,7 +106,7 @@
                     url: "http://localhost:8084/Filmoteka/rest/reviews/" + reviewID,
                     success: function (data) {
                         // alert(data);
-                        drawTable(data);
+                        createReview(data);
                     }
                 });
 
@@ -130,13 +140,13 @@
                             <a href="index.html">POCETNA</a>
                         </li>
                         <li>
-                            <a href="about.html">O NAMA</a>
+                            <a href="filmovi.html">Filmovi</a>
                         </li>
                         <li>
-                            <a href="recenzije.html">BLOG</a>
+                            <a href="recenzije.html">Recenzije</a>
                         </li>
                         <li>
-                            <a href="contact.html">ULOGUJ SE</a>
+                            <a id="logout">IZLOGUJ SE</a>
                         </li>
                     </ul>
                 </div>
@@ -150,14 +160,9 @@
             <main class="main-content">
                 <div class="container">
                     <div class="page" >
-                        <!--                        <div class="breadcrumbs">
-                                                    <a href="index.html">Home</a>
-                                                    <a href="review.html">Movie Review</a>
-                                                    <span>The Croods</span>
-                                                </div>-->
-
                         <div class="content" id="recenzija">
                         </div>
+                    </div>
                     </div> <!-- .container -->
             </main>
         </div>
@@ -172,7 +177,15 @@
                 </div>
             </div>
         </footer>
+        <script type="text/javascript">
 
+            //cisti kuki i redirektuje na pocetnu
+            $('#logout').click(function () {
+                document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                window.location.href = "http://localhost:8084/Filmoteka/index.html";
+            });
+
+        </script>
     </body>
 
 </html>

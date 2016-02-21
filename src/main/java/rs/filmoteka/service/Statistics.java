@@ -5,6 +5,7 @@
  */
 package rs.filmoteka.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -35,11 +36,14 @@ public class Statistics {
         manager.checkUser(em, authorization);
         List<Object[]> stats = em.createNativeQuery("SELECT ocena, count(*) FROM filmoteka1.review group by ocena").getResultList();
         em.close();
-        HashMap hm = new HashMap();
+        List<HashMap> li = new ArrayList();
         for (Object[] stat : stats) {
-            hm.put(stat[0], stat[1]);
+            HashMap hm = new HashMap();
+            hm.put("ocena", stat[0]);
+            hm.put("broj", stat[1]);
+            li.add(hm);
         }
-        GenericEntity<HashMap> entity = new GenericEntity<HashMap>(hm) {
+        GenericEntity<List<HashMap>> entity = new GenericEntity<List<HashMap>>(li) {
         };
         return Response.ok().entity(entity).build();
     }
@@ -52,11 +56,14 @@ public class Statistics {
         manager.checkUser(em, authorization);
         List<Object[]> stats = em.createNativeQuery("SELECT a.imePrezime, count(*) FROM filmoteka1.review r left join filmoteka1.author a on (r.authorID=a.authorID) group by r.authorID;").getResultList();
         em.close();
-        HashMap hm = new HashMap();
+        List<HashMap> li = new ArrayList();
         for (Object[] stat : stats) {
-            hm.put(stat[0], stat[1]);
+            HashMap hm = new HashMap();
+            hm.put("ime", stat[0]);
+            hm.put("broj", stat[1]);
+            li.add(hm);
         }
-        GenericEntity<HashMap> entity = new GenericEntity<HashMap>(hm) {
+        GenericEntity<List<HashMap>> entity = new GenericEntity<List<HashMap>>(li) {
         };
         return Response.ok().entity(entity).build();
     }

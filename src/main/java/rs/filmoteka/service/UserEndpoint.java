@@ -102,18 +102,18 @@ public class UserEndpoint {
     public Response register(@QueryParam("imePrezime") String imePrezime, @QueryParam("grad") String grad, @QueryParam("username") String username, @QueryParam("password") String password, @DefaultValue("2") @QueryParam("type") Integer type) {
         try {
             EntityManager em = EMF.createEntityManager();
-            
-            Author author = new Author();
-            author.setGrad(grad);
-            author.setImePrezime(imePrezime);
-
-            manager.persist(em, author);
-            
             User user = new User();
+            if (type == 2) {
+                Author author = new Author();
+                author.setGrad(grad);
+                author.setImePrezime(imePrezime);
+                manager.persist(em, author);
+                user.setAuthorID(author);
+            }
+
             user.setUsername(username);
             user.setPass(password);
             user.setTypeID(type);
-            user.setAuthorID(author);
             manager.persist(em, user);
             return Response.ok().build();
         } catch (Exception e) {
