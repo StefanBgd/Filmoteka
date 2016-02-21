@@ -5,6 +5,7 @@
  */
 package rs.filmoteka.service;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.ws.rs.Consumes;
@@ -46,7 +47,7 @@ public class ReviewEndpoint {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getReviews(@HeaderParam("authorization") String authorization, @DefaultValue("10") @QueryParam("limit") int limit, @DefaultValue("1") @QueryParam("page") int page) {
+    public Response getReviews(@HeaderParam("authorization") String authorization, @DefaultValue("3") @QueryParam("limit") int limit, @DefaultValue("1") @QueryParam("page") int page) {
         EntityManager em = EMF.createEntityManager();
         manager.checkUser(em, authorization);
         List<Review> reviews = em.createNamedQuery("Review.findAll", Review.class).setFirstResult((page - 1) * limit).setMaxResults(limit).getResultList();
@@ -78,7 +79,7 @@ public class ReviewEndpoint {
 
         Integer id = Integer.parseInt(tokenHelper.decode(authorization).split("##")[1]);
         User user = em.createNamedQuery("User.findByUserID", User.class).setParameter("userID", id).getSingleResult();
-
+//        review.setDatum((int) System.currentTimeMillis());
         review.setAuthorID(user.getAuthorID());
         
         manager.persist(em, review);

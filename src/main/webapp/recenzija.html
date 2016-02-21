@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Dobar Film-Blog</title>
+
+        <script src="bibl/jquery-1.12.0.js"></script>
+        <link rel="stylesheet" href="bibl/bs/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bibl/bs/css/bootstrap-theme.min.css">
+        <script src="bibl/bs/js/bootstrap.min.js"></script>
+
+        <!--         Bootstrap Core CSS 
+                <link href="css/bootstrap.min.css" rel="stylesheet">-->
+
+        <!-- Custom CSS -->
+        <link href="css/business-casual.css" rel="stylesheet">
+
+        <!-- Loading third party fonts -->
+        <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+        <link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <link rel="stylesheet" href="css/style.css">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                var token = document.cookie.substring(6);
+                var list;
+                if (token.length < 5) {
+                    window.location.href = "http://localhost:8084/Filmoteka/index.html";
+                }
+
+
+                var qs = (function (a) {
+                    if (a == "")
+                        return {};
+                    var b = {};
+                    for (var i = 0; i < a.length; ++i)
+                    {
+                        var p = a[i].split('=', 2);
+                        if (p.length == 1)
+                            b[p[0]] = "";
+                        else
+                            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                    }
+                    return b;
+                })(window.location.search.substr(1).split('&'));
+
+                var reviewID = qs["id"];
+
+
+                var token = document.cookie.substring(6);
+                function drawTable(data) {
+//                $("#reviewsdiv div").remove();
+                    drawRow(data);
+                }
+
+                function drawRow(r) {
+                    var procenat = r.filmID.rating / 10 * 100;
+                    var ocena = Number(procenat / 20).toFixed(2);
+
+                    var rprocenat = r.ocena / 10 * 100;
+                    var rocena = rprocenat / 20;
+                    var review = $('<div class = "row"><div class = "col-md-6" ><figure class = "movie-poster"><img src = "' + r.filmID.poster + '" alt = "#"></figure>'
+                            + '</div><div class = "col-md-6" ><h2 class = "movie-title">' + r.filmID.title + '</h2><div class = "movie-summary" ><p >' + r.filmID.plot
+                            + '</p></div><ul class = "movie-meta" ><li><strong> Rating: </strong><div class = "star-rating" title = "Rated ' + ocena + ' out of 5" >'
+                            + '<span style = "width:' + procenat + '%" > <strong class = "rating" >' + ocena + '</strong> out of 5</span > </div>'
+                            + '</li><li><strong> Premiere: </strong>' + r.filmID.year + '</li></ul><ul class = "starring"><li><strong> Directors: </strong>' + r.filmID.director
+                            + '</li></ul></div></div><div class = "entry-content" ><p >' + r.sadrzaj + '</p></div>'
+                            + '<ul class = "movie-meta" ><li><strong> Rating: </strong><div class = "star-rating" title = "Rated ' + rocena + ' out of 5" >'
+                            + '<span style = "width:' + rprocenat + '%" > <strong class = "rating" >' + rocena + '</strong> out of 5</span > </div>'
+                            + '</li><li><strong> Review date: </strong>' + r.datum + '</li></ul><ul class = "starring"><li><strong> Reviewer: </strong>' + r.authorID.imePrezime + ', ' + r.authorID.grad
+                            + '</li></ul>');
+                    $("#recenzija").append(review);
+                }
+
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": token
+                    },
+                    url: "http://localhost:8084/Filmoteka/rest/reviews/" + reviewID,
+                    success: function (data) {
+                        // alert(data);
+                        drawTable(data);
+                    }
+                });
+
+            });
+        </script>
+    </head>
+
+    <body>
+
+        <div class="brand">DOBAR FILM</div>
+        <div class="address-bar">Sajt cija je namena izdavanje kritika za domace i strane filmove!</div>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+                    <a class="navbar-brand" href="index.html">Business Casual</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="index.html">POCETNA</a>
+                        </li>
+                        <li>
+                            <a href="about.html">O NAMA</a>
+                        </li>
+                        <li>
+                            <a href="recenzije.html">BLOG</a>
+                        </li>
+                        <li>
+                            <a href="contact.html">ULOGUJ SE</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <div class="container">
+
+            <main class="main-content">
+                <div class="container">
+                    <div class="page" >
+                        <!--                        <div class="breadcrumbs">
+                                                    <a href="index.html">Home</a>
+                                                    <a href="review.html">Movie Review</a>
+                                                    <span>The Croods</span>
+                                                </div>-->
+
+                        <div class="content" id="recenzija">
+                        </div>
+                    </div> <!-- .container -->
+            </main>
+        </div>
+        <!-- /.container -->
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <p>Copyright &copy; Idealna trojka 2016</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </body>
+
+</html>

@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r"),
     @NamedQuery(name = "Review.findByReviewID", query = "SELECT r FROM Review r WHERE r.reviewID = :reviewID"),
+//    @NamedQuery(name = "Review.getMarkStats", query = "SELECT r.ocena, count(*) FROM Review r GROUP BY r.ocena"),
     @NamedQuery(name = "Review.findByDatum", query = "SELECT r FROM Review r WHERE r.datum = :datum"),
     @NamedQuery(name = "Review.findByOcena", query = "SELECT r FROM Review r WHERE r.ocena = :ocena")})
 public class Review implements Serializable {
