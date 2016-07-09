@@ -7,24 +7,90 @@
         <script src="bibl/jquery-1.12.0.js"></script>
         <link rel="stylesheet" href="bibl/bs/css/bootstrap.min.css">
         <link rel="stylesheet" href="bibl/bs/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link href="css/business-casual.css" rel="stylesheet">
+        <!-- Fonts -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
         <script src="bibl/bs/js/bootstrap.min.js"></script>
 
 
         <title>Filmoteka | Dodaj novu recenziju</title>
     </head>
-    <body>
 
-        <form name="novaRecenzija" method="POST"> 
-            Naziv filma:<br/>
-            <input type="text" name="nazivFilma" id="nazivFilma" /><br/>
-            Recenzija:<br/>
-            <textarea rows="25" cols="100" id="recenzija"></textarea><br/>
-            Ocena:<br/>
-            <input type="text" name="ocena" id="ocena"/><br/><br>
-            <input type="button" value="Unesi" id="unesi" onclick="napraviRecenziju()"/><br/>
-        </form>
+    <body style="background-color: #131a20">
+
+        <div class="brand">DOBAR FILM</div>
+        <div class="address-bar">Sajt čija je namena izdavanje kritika za domaće i strane filmove!</div>
+        <!-- Navigation -->
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+                    <a class="navbar-brand" href="index.html">Business Casual</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="filmovi.html">FILMOVI</a>
+                        </li>
+                        <li>
+                            <a href="recenzije.html">RECENZIJE</a>
+                        </li>
+                        <li>
+                            <a href="statistika.html">STATISTIKA</a>
+                        </li>
+                        <li>
+                            <a href="about.html">O NAMA</a>
+                        </li>
+                        <li>
+                            <a id="logout">LOGOUT</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <div class="box" id="novaRecDiv">
+            <h1>Nova recenzija</h2>
+                <form name="novaRecenzija" method="POST"> 
+                    <p>Naziv filma:</p><br/>
+                    <input type="text" name="nazivFilma" id="nazivFilma" /><br/><br/>
+                    <p>Recenzija:</p><br/>
+                    <textarea rows="25" cols="100" id="recenzija"></textarea><br/><br/>
+                    <p>Ocena:</p><br/>
+                    <input type="text" name="ocena" id="ocena"/><br/><br>
+                    <button type="button" class="btn btn-success" id="unesi" onclick="napraviRecenziju()">Unesi</button><br/>
+                </form>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <p>Copyright &copy; Idealna trojka 2016</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
         <script type="text/javascript">
+
+            $('#logout').click(function () {
+                document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                window.location.href = "http://localhost:8084/Filmoteka/index.html";
+            });
 
             function napraviRecenziju() {
                 var xmlHttp;
@@ -77,24 +143,31 @@
                                 headers: {
                                     "Authorization": token
                                 },
-                                dataType: 'json'
+                                dataType: 'json',
+                                success: function (data) {
+                                    alert("Film je uspešno sačuvan");
+                                    $.ajax({
+                                        url: 'http://localhost:8084/Filmoteka/rest/reviews',
+                                        type: 'POST',
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({
+                                            "authorID": 1,
+                                            "filmID": obj.imdbID,
+                                            "datum": "",
+                                            "ocena": ocena,
+                                            "sadrzaj": recenzija
+                                        }),
+                                        headers: {
+                                            "Authorization": token
+                                        },
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            window.location.href = "http://localhost:8084/Filmoteka/recenzije.html";
+                                        }
+                                    });
+                                }
                             });
-                            $.ajax({
-                                url: 'http://localhost:8084/Filmoteka/rest/reviews',
-                                type: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify({
-                                    "authorID": 1,
-                                    "filmID": obj.imdbID,
-                                    "datum": 1,
-                                    "ocena": ocena,
-                                    "sadrzaj": recenzija
-                                }),
-                                headers: {
-                                    "Authorization": token
-                                },
-                                dataType: 'json'
-                            });
+
 
                         }
                     }

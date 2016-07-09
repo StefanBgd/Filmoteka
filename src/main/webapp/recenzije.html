@@ -57,7 +57,7 @@
                         if (data.length > 1) {
                             list = data;
                             drawTable(list);
-                            $("html, body").animate({ scrollTop: 0 }, 200);
+                            $("html, body").animate({scrollTop: 0}, 200);
                         }
                     }
                 });
@@ -71,9 +71,13 @@
             }
 
             function drawRow(r) {
+                var poster = r.filmID.poster;
+                if (poster.length < 10) {
+                    poster = "css/404.jpg";
+                }
                 var review = $('<div class="col-lg-12 text-center">\n\
-            <img class="img-responsive img-border img-full" src="' + r.filmID.poster + '" alt="">'
-                        + '<h2>' + r.filmID.title + ' <br><small>' + r.authorID.imePrezime + ', ' +new Date(r.datum * 1000) + '</small></h2>'
+            <img class="img-responsive img-border img-full" src="' + poster + '" alt="">'
+                        + '<h2>' + r.filmID.title + ' <br><small>' + r.authorID.imePrezime + ', ' + new Date(r.datum).toLocaleString() + '</small></h2>'
                         + '<h2>Ocena: ' + r.ocena + '</h2>'
                         + '<p>' + r.sadrzaj + '</p><a href="http://localhost:8084/Filmoteka/recenzija.html?id=' + r.reviewID + '" class="btn btn-default btn-lg">Read More</a><hr></div>');
                 $("#reviewsdiv").append(review);
@@ -118,8 +122,7 @@
     <body>
 
         <div class="brand">DOBAR FILM</div>
-        <div class="address-bar">Sajt cija je namena izdavanje kritika za domace i strane filmove!</div>
-
+        <div class="address-bar">Sajt čija je namena izdavanje kritika za domaće i strane filmove!</div>
         <!-- Navigation -->
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
@@ -138,16 +141,19 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="index.html">POCETNA</a>
+                            <a href="filmovi.html">FILMOVI</a>
                         </li>
                         <li>
-                            <a href="filmovi.html">Filmovi</a>
+                            <a href="novarecenzija.html">NOVA RECENZIJA</a>
                         </li>
                         <li>
-                            <a href="recenzije.html">Recenzije</a>
+                            <a href="statistika.html">STATISTIKA</a>
                         </li>
                         <li>
-                            <a id="logout">IZLOGUJ SE</a>
+                            <a href="about.html">O NAMA</a>
+                        </li>
+                        <li>
+                            <a id="logout">LOGOUT</a>
                         </li>
                     </ul>
                 </div>

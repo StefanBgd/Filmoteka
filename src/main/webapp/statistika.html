@@ -64,15 +64,15 @@
                 for (var i = 0; i < jsonData.length; i++) {
                     data.addRow(["Ocena: " + jsonData[i].ocena, jsonData[i].broj]);
                 }
-                
-                 var options = {'title': 'Statistika ocena',
+
+                var options = {'title': 'Statistika ocena',
                     'is3D': true,
                     'width': 600,
                     'height': 400};
 
                 var chart = new google.visualization.PieChart(document.getElementById('statistikaPie'));
                 chart.draw(data, options);
-                }
+            }
 
         </script>
 
@@ -82,8 +82,7 @@
     <body style="background-color: #131a20">
 
         <div class="brand">DOBAR FILM</div>
-        <div class="address-bar">Mesto recenzija za domaće i strane filmove</div>
-
+        <div class="address-bar">Sajt čija je namena izdavanje kritika za domaće i strane filmove!</div>
         <!-- Navigation -->
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
@@ -102,19 +101,19 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="index.html">POČETNA</a>
+                            <a href="filmovi.html">FILMOVI</a>
+                        </li>
+                        <li>
+                            <a href="recenzije.html">RECENZIJE</a>
+                        </li>
+                        <li>
+                            <a href="novarecenzija.html">NOVA RECENZIJA</a>
                         </li>
                         <li>
                             <a href="about.html">O NAMA</a>
                         </li>
                         <li>
-                            <a href="recenzije.html">BLOG</a>
-                        </li>
-                        <li>
-                            <a href="statistika.html">STATISTIKA</a>
-                        </li>
-                        <li>
-                            <a href="contact.html">ULOGUJ SE</a>
+                            <a id="logout">LOGOUT</a>
                         </li>
                     </ul>
                 </div>

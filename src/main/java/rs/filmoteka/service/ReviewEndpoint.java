@@ -45,6 +45,16 @@ public class ReviewEndpoint {
         tokenHelper = new Base64Token();
     }
     
+     /**
+     * getReviews vraća sve recenzije.
+     * URL: http://localhost:8084/Filmoteka/rest/reviews 
+     * METHOD: GET 
+     * HEADERS: Authorization
+     * @param authorization [String]
+     * @param limit [int]
+     * @param page [int]
+     * @return [application/json, application/xml] Lista recenzija
+     */
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getReviews(@HeaderParam("authorization") String authorization, @DefaultValue("3") @QueryParam("limit") int limit, @DefaultValue("1") @QueryParam("page") int page) {
@@ -57,6 +67,15 @@ public class ReviewEndpoint {
         return Response.ok().entity(entity).build();
     }
 
+     /**
+     * getReview vraća recenziju za definisani id.
+     * URL: http://localhost:8084/Filmoteka/rest/reviews/:id 
+     * METHOD: GET
+     * HEADERS: Authorization
+     * @param authorization [String]
+     * @param id [int]
+     * @return [application/json, application/xml] Review
+     */
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -70,6 +89,15 @@ public class ReviewEndpoint {
         return Response.ok().entity(entity).build();
     }
 
+        /**
+     * addReview dodaje novu recenziju.
+     * URL: http://localhost:8084/Filmoteka/rest/reviews 
+     * METHOD: POST
+     * HEADERS: Authorization, Content-Type
+     * @param authorization [String]
+     * @param review [Review object]
+     * @return [application/json, application/xml] Review
+     */
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -97,6 +125,15 @@ public class ReviewEndpoint {
         return Response.ok(review).build();
     }
 
+         /**
+     * deleteReview briše recenziju za id.
+     * URL: http://localhost:8084/Filmoteka/rest/reviews/:id 
+     * METHOD: DELETE
+     * HEADERS: Authorization
+     * @param authorization [String]
+     * @param id [int]
+     * @return [application/json, application/xml] obrisan Review
+     */
     @DELETE
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

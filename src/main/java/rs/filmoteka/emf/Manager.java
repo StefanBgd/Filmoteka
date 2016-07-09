@@ -66,7 +66,8 @@ public class Manager {
         try {
             User user = em.find(User.class, Integer.parseInt(tokenHelper.decode(token).split("##")[1]));
             if (user.getToken() != null && !user.getToken().equals("")) {
-                if (!(user.getAuthorID() != null && user.getAuthorID().getAuthorID() == 2)) {
+                if (user.getTypeID() != 2) {
+                    System.out.println("*******************************");
                     em.close();
                     throw new NotAuthorizedException("You have no premission for this request");
                 }

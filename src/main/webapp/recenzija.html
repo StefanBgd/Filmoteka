@@ -84,6 +84,9 @@
 
                     var rprocenat = r.ocena / 10 * 100;
                     var rocena = rprocenat / 20;
+                    if (r.filmID.poster.length < 10) {
+                        r.filmID.poster = "css/404.jpg";
+                    }
                     var review = $('<div class = "row"><div class = "col-md-6" ><figure class = "movie-poster"><img src = "' + r.filmID.poster + '" alt = "#"></figure>'
                             + '</div><div class = "col-md-6" ><h2 class = "movie-title">' + r.filmID.title + '</h2><div class = "movie-summary" ><p >' + r.filmID.plot
                             + '</p></div><ul class = "movie-meta" ><li><strong> Rating: </strong><div class = "star-rating" title = "Rated ' + ocena + ' out of 5" >'
@@ -92,7 +95,7 @@
                             + '</li></ul></div></div><div class = "entry-content" ><p >' + r.sadrzaj + '</p></div>'
                             + '<ul class = "movie-meta" ><li><strong> Rating: </strong><div class = "star-rating" title = "Rated ' + rocena + ' out of 5" >'
                             + '<span style = "width:' + rprocenat + '%" > <strong class = "rating" >' + rocena + '</strong> out of 5</span > </div>'
-                            + '</li><li><strong> Review date: </strong>' + r.datum + '</li></ul><ul class = "starring"><li><strong> Reviewer: </strong>' + r.authorID.imePrezime + ', ' + r.authorID.grad
+                            + '</li><li><strong> Review date: </strong>' + new Date(r.datum).toLocaleString() + '</li></ul><ul class = "starring"><li><strong> Reviewer: </strong>' + r.authorID.imePrezime + ', ' + r.authorID.grad
                             + '</li></ul>');
                     $("#recenzija").append(review);
                 }
@@ -117,8 +120,7 @@
     <body>
 
         <div class="brand">DOBAR FILM</div>
-        <div class="address-bar">Sajt cija je namena izdavanje kritika za domace i strane filmove!</div>
-
+        <div class="address-bar">Sajt čija je namena izdavanje kritika za domaće i strane filmove!</div>
         <!-- Navigation -->
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
@@ -137,16 +139,19 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="index.html">POCETNA</a>
+                            <a href="filmovi.html">FILMOVI</a>
                         </li>
                         <li>
-                            <a href="filmovi.html">Filmovi</a>
+                            <a href="recenzije.html">RECENZIJE</a>
                         </li>
                         <li>
-                            <a href="recenzije.html">Recenzije</a>
+                            <a href="novarecenzija.html">NOVA RECENZIJA</a>
                         </li>
                         <li>
-                            <a id="logout">IZLOGUJ SE</a>
+                            <a href="statistika.html">STATISTIKA</a>
+                        </li>
+                        <li>
+                            <a id="logout">LOGOUT</a>
                         </li>
                     </ul>
                 </div>
@@ -163,7 +168,7 @@
                         <div class="content" id="recenzija">
                         </div>
                     </div>
-                    </div> <!-- .container -->
+                </div> <!-- .container -->
             </main>
         </div>
         <!-- /.container -->

@@ -40,6 +40,14 @@ public class UserEndpoint {
         tokenHelper = new Base64Token();
     }
 
+    /**
+     * checkToken proverava token korisnika.
+     * URL: http://localhost:8084/Filmoteka/rest/users 
+     * METHOD: GET 
+     * HEADERS:Authorization
+     * @param token [String]
+     * @return status 200 OK
+     */
     @GET
     public Response checkToken(@HeaderParam("authorization") String token) {
         try {
@@ -52,6 +60,14 @@ public class UserEndpoint {
         }
     }
 
+    /**
+     * logIn uloguje korisnika na sajt, odnosno vrati mu token.
+     * URL: http://localhost:8084/Filmoteka/rest/users/login
+     * METHOD: POST 
+     * HEADERS: Authorization
+     * @param authorization [String]
+     * @return [application/json] UserRepresentation
+     */
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
@@ -86,6 +102,14 @@ public class UserEndpoint {
         return Response.ok().entity(ur).build();
     }
 
+     /**
+     * logout izloguje korisnika sa sajta.
+     * URL: http://localhost:8084/Filmoteka/rest/users/logout
+     * METHOD: POST 
+     * HEADERS: Authorization
+     * @param token [String]
+     * @return status 200 OK
+     */
     @POST
     @Path("/logout")
     public Response logOut(@HeaderParam("authorization") String token) {
@@ -97,6 +121,18 @@ public class UserEndpoint {
         return Response.ok().build();
     }
 
+     /**
+     * register registruje korisnika.
+     * URL: http://localhost:8084/Filmoteka/rest/users/register
+     * METHOD: GET 
+     * HEADERS: Authorization
+     * @param imePrezime
+     * @param grad
+     * @param username
+     * @param password
+     * @param type
+     * @return status 200 OK
+     */
     @GET
     @Path("/register")
     public Response register(@QueryParam("imePrezime") String imePrezime, @QueryParam("grad") String grad, @QueryParam("username") String username, @QueryParam("password") String password, @DefaultValue("2") @QueryParam("type") Integer type) {

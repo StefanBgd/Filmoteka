@@ -28,6 +28,15 @@ public class Statistics {
 
     private Manager manager = new Manager();
 
+        
+     /**
+     * getMarkAndCount vraća ocene i njihovu količinu.
+     * URL: http://localhost:8084/Filmoteka/rest/statistics/marks 
+     * METHOD: GET 
+     * HEADERS: Authorization
+     * @param authorization [String]
+     * @return [application/json, application/xml] Lista ocena i njihove količine
+     */
     @GET
     @Path("marks")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -47,7 +56,14 @@ public class Statistics {
         };
         return Response.ok().entity(entity).build();
     }
-
+     /**
+     * getMarkAndCount vraća ime autora i broj njegovih recenzija.
+     * URL: http://localhost:8084/Filmoteka/rest/statistics/reviewers 
+     * METHOD: GET 
+     * HEADERS: Authorization
+     * @param authorization [String]
+     * @return [application/json, application/xml] Lista autora i broja recenzija
+     */
     @GET
     @Path("reviewers")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

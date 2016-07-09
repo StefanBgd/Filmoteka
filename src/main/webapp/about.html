@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Dobar Film-Blog</title>
+        <title>Dobar Film-O nama</title>
 
         <script src="bibl/jquery-1.12.0.js"></script>
         <link rel="stylesheet" href="bibl/bs/css/bootstrap.min.css">
@@ -20,14 +20,13 @@
                 <link href="css/bootstrap.min.css" rel="stylesheet">-->
 
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="css/style.css">
         <link href="css/business-casual.css" rel="stylesheet">
 
         <!-- Loading third party fonts -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
         <link href="http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
 
-        <!--<link rel="stylesheet" href="css/style2.css">-->
+        <link rel="stylesheet" href="css/style2.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -35,63 +34,12 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script type="text/javascript">
-
-            $(document).ready(function () {
-                var token = document.cookie.substring(6);
-                if (token.length < 1) {
-                    window.location.href = "http://localhost:8084/Filmoteka/index.html";
-                }
-
-                $.ajax({
-                    type: "GET",
-                    headers: {
-                        "Authorization": token
-                    },
-                    url: "http://localhost:8084/Filmoteka/rest/users",
-                    success: function (data) {
-                    }, error: function () {
-                        window.location.href = "http://localhost:8084/Filmoteka/index.html";
-                    }
-                });
-
-                var token = document.cookie.substring(6);
-                function createMovies(data) {
-                    for (var i = 0; i < data.length; i++) {
-                        drawMovies(data[i]);
-                    }
-                }
-
-                function drawMovies(r) {
-                    if (r.poster.length < 10) {
-                        r.poster = "css/404.jpg";
-                    }
-                    var review = $('<div class = "movie"><figure class = "movie-poster">'
-                            + '<img src = "' + r.poster + '" alt = "#" style="height:350px"></figure>'
-                            + '<div class = "movie-title"><a href = "single.html">' + r.title + '</a></div >'
-                            + '<p>' + r.plot + '</p></div>');
-                    $("#filmovi").append(review);
-                }
-
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    headers: {
-                        "Authorization": token
-                    },
-                    url: "http://localhost:8084/Filmoteka/rest/films/?limit=40",
-                    success: function (data) {
-                        // alert(data);
-                        createMovies(data);
-                    }
-                });
-            });</script>
     </head>
 
     <body>
 
         <div class="brand">DOBAR FILM</div>
-        <div class="address-bar">Sajt čija je namena izdavanje kritika za domaće i strane filmove!</div>
+        <div class="address-bar">Sajt cija je namena izdavanje kritika za domace i strane filmove!</div>
 
         <!-- Navigation -->
         <nav class="navbar navbar-default" role="navigation">
@@ -111,6 +59,9 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
+                            <a href="filmovi.html">FILMOVI</a>
+                        </li>
+                        <li>
                             <a href="recenzije.html">RECENZIJE</a>
                         </li>
                         <li>
@@ -118,9 +69,6 @@
                         </li>
                         <li>
                             <a href="statistika.html">STATISTIKA</a>
-                        </li>
-                        <li>
-                            <a href="about.html">O NAMA</a>
                         </li>
                         <li>
                             <a id="logout">LOGOUT</a>
@@ -134,15 +82,58 @@
 
         <div class="container">
 
-            <main class="main-content">
-                <div class="container">
-                    <div class="page" >
-                        <h3>Recenzirani filmovi</h3>
-                        <div class="movie-list" id="filmovi">
-                        </div>
+            <div class="row">
+                <div class="box">
+                    <div class="col-lg-12">
+                        <hr>
+                        <h2 class="intro-text text-center">
+                            <strong>Idealna Trojka</strong>
+                        </h2>
+                        <hr>
                     </div>
-                </div> <!-- .container -->
-            </main>
+                    <div class="col-md-6">
+                        <img class="img-responsive img-border-left" src="img/slide-2.jpg" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <p>Idealna Trojka je mlada kompanija koja se bavi pretežno web programiranjem, pored toga jako je uspešna i u izradi poslovnih i mobilnih aplikacija.</p>
+                        <p>Relativno mlada kompanija koja se već pokazala kao ozbiljna i samouverena, i sa velim uspehom predstavlja našu zemlju kako na evropskom tako i na svetskom tržištu. </p>
+                        <p>Naš cilj je da prepoznamo i zadovoljimo potrebe naših korisnika i klijenata. Svaki danom, naš tim aktivno radi na pronalaženju novih rešenja koje će pomoći kako na poslovnom planu, tako i na svakodnevnim aktivnostima. Hiljade srećnih klijenata je razlog našeg postojanja. <strong> Budite i Vi jedan od počastvovanih korisnika usluga Zlatne Trojke</strong>  </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="box">
+                    <div class="col-lg-12">
+                        <hr>
+                        <h2 class="intro-text text-center"><strong>Nas</strong>
+                            <strong>Tim</strong>
+                        </h2>
+                        <hr>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <img class="img-responsive" src="img/slika1.jpg" alt="">
+                        <h3>Filip Stojanovic
+                            <small>Admin</small>
+                        </h3>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <img class="img-responsive" src="img/slika2.jpg" alt="">
+                        <h3>Stefan Stanojevic
+                            <small>Admin</small>
+                        </h3>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <img class="img-responsive" src="img/slika3.jpg" alt="">
+                        <h3>Uros Stanojevic
+                            <small>Admin</small>
+                        </h3>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
         </div>
         <!-- /.container -->
 
@@ -150,12 +141,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <p>Copyright &copy; Idealna trojka 2016</p>
+                        <p>Copyright &copy; Idealna Trojka 2016</p>
                     </div>
                 </div>
             </div>
         </footer>
-        <script type="text/javascript">
+                <script type="text/javascript">
 
             //cisti kuki i redirektuje na pocetnu
             $('#logout').click(function () {
